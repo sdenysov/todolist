@@ -1,0 +1,45 @@
+.app-title {
+    padding: 5px;
+    font-size: 30px;
+}
+
+.container {
+    margin-top: 15px ;
+}
+
+.input-group .form-control {
+    height: 48px;
+}
+
+.app-new-task-form .form-group {
+    margin-bottom: 5px;
+}
+
+.app-task-todo-label {
+    color: #396491;
+}
+
+.app-task {
+    border-width: 0 2px 1px;
+    border-style: solid;
+    border-color: #ccc;
+    background-color: #EAF8F9;
+    padding: 8px;
+    line-height: 30px;
+}
+
+.app-task:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-width: 2px;
+}
+
+.app-task:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-width: 2px;
+}
+
+.app-tasks-container .btn-xs {
+    padding: 0 4px;
+}

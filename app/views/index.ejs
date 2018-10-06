@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo list</title>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/style.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="app-title text-center well">Todo list</div>
+            <form class="app-new-task-form form-horizontal" action="/tasks" method="POST">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <input name="newTask" type="text" class="form-control" id="new-task-input"
+                                   placeholder="Add new task">
+                            <div class="input-group-addon">
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-primary">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="app-task-todo-label">
+                Task to do <span class="badge"><%= tasksToDo %></span>
+            </div>
+            <hr>
+            <div class="app-tasks-container">
+                <% tasksData.forEach(function(tasksDataElement){ %>
+                <div class="app-task" data-task-id = "<%= tasksDataElement.id %>">
+                    <span><%= tasksDataElement.description %></span>
+                    <div class="app-task-controls pull-right">
+                        <span class="label label-success"><%= tasksDataElement.status %></span>
+                        <div id="edit-task-btn" class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </div>
+                        <div class="btn btn-danger btn-xs delete-task-btn">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="scripts/script.js"></script>
+</body>
+</html>
