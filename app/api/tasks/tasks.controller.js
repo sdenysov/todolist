@@ -11,4 +11,11 @@ function findAll(callback) {
     });
 }
 
+function remove(id, callback){
+    TaskService.remove(id, (error) => {
+        callback(error)
+    });
+}
+
 exports.findAll = findAll;
+exports.remove = remove;

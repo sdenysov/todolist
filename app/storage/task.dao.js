@@ -14,7 +14,19 @@ function getAll(callback) {
     });
 }
 
+function remove(id, callback) {
+    const removeTaskByIdSql = "DELETE FROM tasks WHERE id =" + id;
+    connectionPool.getConnection(function (error, connection) {
+        if (dbUtils.breakIfErrorExists(error, callback)) return;
+        connection.query(removeTaskByIdSql, function (error) {
+            if (dbUtils.breakIfErrorExists(error, callback)) return;
+            callback();
+        });
+    });
+}
+
 exports.getAll = getAll;
+exports.remove = remove;
 
 function createTasks(records) {
     return records.map(record => {
