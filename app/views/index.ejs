@@ -29,15 +29,15 @@
                 </div>
             </form>
             <div class="app-task-todo-label">
-                Task to do <span class="badge"><%= tasksToDo %></span>
+                Task to do <span class="badge"><%= tasks.length %></span>
             </div>
             <hr>
             <div class="app-tasks-container">
-                <% tasksData.forEach(function(tasksDataElement){ %>
-                <div class="app-task" data-task-id = "<%= tasksDataElement.id %>">
-                    <span><%= tasksDataElement.description %></span>
+                <% tasks.forEach(function(task){ %>
+                <div class="app-task" data-task-id = "<%= task.id %>">
+                    <span><%= task.title %></span>
                     <div class="app-task-controls pull-right">
-                        <span class="label label-success"><%= tasksDataElement.status %></span>
+                        <span class="label label-success"><%= task.status.name %></span>
                         <div id="edit-task-btn" class="btn btn-primary btn-xs">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>

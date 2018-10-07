@@ -1,11 +1,10 @@
 
-function handleError(error, connection, callback) {
+function breakIfErrorExists(error, callback) {
     if (error) {
-        connection.release();
         callback(error);
         return true;
     }
     return false;
 }
 
-module.exports = handleError;
+module.exports.breakIfErrorExists = breakIfErrorExists;

@@ -1,4 +1,4 @@
-class Task {
+class TaskDto {
 
     constructor(params) {
         this.id = params.id || null;
@@ -7,4 +7,4 @@ class Task {
     }
 }
 
-module.exports = Task;
+module.exports = TaskDto;

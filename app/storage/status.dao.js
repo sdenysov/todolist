@@ -51,6 +51,6 @@ exports.remove = remove;
 
 function createStatus(record) {
     console.log(record);
-    let task = new Task(record);
+    let task = new TaskDto(record);
 
 }

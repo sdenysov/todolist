@@ -6,7 +6,7 @@ let pool = mysql.createPool({
     port: 3306,
     user: 'root',
     password: 'password',
-    database: 'sd'
+    database: 'todolist'
 });
 
 pool.on('connection', function (connection) {
