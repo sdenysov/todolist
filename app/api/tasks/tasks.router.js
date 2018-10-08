@@ -6,17 +6,17 @@ router.get('/', (req, res) => {
     res.redirect('/tasks');
 });
 router.get('/tasks', function(req, res) {
-    findAndRenderAllTasks(res);
+    renderTaskPage(req, res);
 });
-router.delete('/tasks', function(req, res) {
-    const id = req.body.task_id; //TODO get id from req url params
+router.delete('/tasks/:id', function(req, res) {
+    const id = req.params.id; //TODO get id from req url params
     taskController.remove(id, function(error) {
         if (error) throw error;
-        findAndRenderAllTasks(res);
+        res.end();
     })
 });
 
-function findAndRenderAllTasks (res){
+function renderTaskPage (req, res){
     taskController.findAll(function(error, tasks) {
         if (error) throw error;
         res.render('index', {tasks: tasks});

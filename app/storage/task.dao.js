@@ -10,17 +10,19 @@ function getAll(callback) {
         connection.query(allTasksSql, function (error, results) {
             if (dbUtils.breakIfErrorExists(error, callback)) return;
             callback(null, createTasks(results));
+            connection.release();
         });
     });
 }
 
 function remove(id, callback) {
-    const removeTaskByIdSql = "DELETE FROM tasks WHERE id =" + id;
+    const removeTaskByIdSql = "DELETE FROM tasks WHERE id = ?";
     connectionPool.getConnection(function (error, connection) {
         if (dbUtils.breakIfErrorExists(error, callback)) return;
-        connection.query(removeTaskByIdSql, function (error) {
+        connection.query(removeTaskByIdSql, id, function (error) {
             if (dbUtils.breakIfErrorExists(error, callback)) return;
             callback();
+            connection.release();
         });
     });
 }
