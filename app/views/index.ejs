@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
             <div class="app-title text-center well">Todo list</div>
-            <form class="app-new-task-form form-horizontal" action="/tasks" method="POST">
+            <form class="app-new-task-form form-horizontal" action="/tasks" method="post">
                 <div class="form-group">
                     <div class="col-sm-12">
                         <div class="input-group">
@@ -32,17 +32,21 @@
                 Task to do <span class="badge"><%= tasks.length %></span>
             </div>
             <hr>
-            <div class="app-tasks-container">
-                <% tasks.forEach(function(task){ %>
-                <div class="app-task" data-task-id = "<%= task.id %>">
-                    <span><%= task.title %></span>
-                    <div class="app-task-controls pull-right">
-                        <span class="label label-success"><%= task.status.name %></span>
-                        <div id="edit-task-btn" class="btn btn-primary btn-xs">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <div id="app-tasks-container">
+                <% tasks.forEach(function(task) { %>
+                <div class="app-task" data-task-id="<%= task.id %>">
+                    <div class="input-group">
+                        <div class=" input-group-addon"><span class="label label-success"><%= task.status.name %></span>
                         </div>
-                        <div class="btn btn-danger btn-xs delete-task-btn">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        <input type="text" class="form-control" value="<%= task.title %>">
+                        <div class="input-group-addon">
+                            <div class="input-group-btn">
+                                <div class="app-task-controls">
+                                    <div class="btn btn-danger btn-xs delete-task-btn">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,6 +58,8 @@
 
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="scripts/script.js"></script>
+<script src="/scripts/services/http.service.js"></script>
+<script src="/scripts/tasks/services/tasks.service.js"></script>
+<script src="/scripts/app.js"></script>
 </body>
 </html>

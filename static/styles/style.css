@@ -40,6 +40,7 @@
     border-bottom-width: 2px;
 }
 
-.app-tasks-container .btn-xs {
+#app-tasks-container .btn-xs {
     padding: 0 4px;
+    margin: 0 2px;
 }

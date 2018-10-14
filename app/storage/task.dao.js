@@ -5,30 +5,40 @@ const dbUtils = require('../utils/db.utils');
 
 function getAll(callback) {
     const allTasksSql = "SELECT * FROM all_tasks_view;";
-    connectionPool.getConnection(function (error, connection) {
+    connectionPool.query(allTasksSql, function (error, results) {
         if (dbUtils.breakIfErrorExists(error, callback)) return;
-        connection.query(allTasksSql, function (error, results) {
-            if (dbUtils.breakIfErrorExists(error, callback)) return;
-            callback(null, createTasks(results));
-            connection.release();
-        });
-    });
+        callback(null, createTasks(results));
+    })
 }
 
 function remove(id, callback) {
     const removeTaskByIdSql = "DELETE FROM tasks WHERE id = ?";
-    connectionPool.getConnection(function (error, connection) {
+    connectionPool.query(removeTaskByIdSql, id, function (error) {
         if (dbUtils.breakIfErrorExists(error, callback)) return;
-        connection.query(removeTaskByIdSql, id, function (error) {
-            if (dbUtils.breakIfErrorExists(error, callback)) return;
-            callback();
-            connection.release();
-        });
+        callback();
+    });
+}
+
+function update(taskData, callback) {
+    const updateTaskByIdSql = "UPDATE `tasks` SET `title` = ? WHERE `id` = ?";
+    connectionPool.query(updateTaskByIdSql, [taskData.taskTitle, taskData.id], function (error) {
+        if (dbUtils.breakIfErrorExists(error, callback)) return;
+        callback();
+    });
+}
+
+function insert(task, callback) {
+    const insertTaskSql = "INSERT INTO `tasks` SET `title` = ?, `status_id` = 1";
+    connectionPool.query(insertTaskSql, task, function (error) {
+        if (dbUtils.breakIfErrorExists(error, callback)) return;
+        callback();
     });
 }
 
 exports.getAll = getAll;
 exports.remove = remove;
+exports.update = update;
+exports.insert = insert;
 
 function createTasks(records) {
     return records.map(record => {
