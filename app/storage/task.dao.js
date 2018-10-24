@@ -27,9 +27,9 @@ function update(taskData, callback) {
     });
 }
 
-function insert(task, callback) {
+function insert(taskData, callback) {
     const insertTaskSql = "INSERT INTO `tasks` SET `title` = ?, `status_id` = 1";
-    connectionPool.query(insertTaskSql, task, function (error) {
+    connectionPool.query(insertTaskSql, taskData.taskTitle, function (error) {
         if (dbUtils.breakIfErrorExists(error, callback)) return;
         callback();
     });

@@ -9,12 +9,12 @@ var HttpService = (function () {
             });
         },
 
-        update: function (url, taskTitleValue, callback) {
+        update: function (url, data, successCallback) {
             $.ajax({
-                type: "POST",
+                type: "PUT",
                 url: url,
-                data: {taskTitle: taskTitleValue},
-                success: callback
+                data: {taskTitle: data.title},
+                success: successCallback
             });
         }
     }

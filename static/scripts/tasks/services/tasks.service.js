@@ -7,8 +7,8 @@ var TaskService = (function () {
             HttpService.delete(baseUrl + id, callback)
         },
 
-        update: function (id, taskTitle, callback) {
-            HttpService.update(baseUrl + id, taskTitle, callback)
+        update: function (id, taskData, callback) {
+            HttpService.update(baseUrl + id, taskData, callback)
         }
     }
 })();

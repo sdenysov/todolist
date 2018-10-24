@@ -1,4 +1,4 @@
-const TaskConverter = require('./task.convertor');
+const TaskConvertor = require('./task.convertor');
 const TaskDao = require('../../storage/task.dao');
 
 function findAll(callback) {
@@ -7,7 +7,7 @@ function findAll(callback) {
             callback(error);
             return;
         }
-        callback(null, tasks.map(TaskConverter.toDto));
+        callback(null, tasks.map(TaskConvertor.toDto));
     });
 }
 
