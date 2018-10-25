@@ -1,5 +1,5 @@
 'use strict';
-
+var async = require('async');
 var dbm;
 var type;
 var seed;
@@ -16,11 +16,11 @@ exports.setup = function (options, seedLink) {
 };
 
 exports.up = function (db) {
-    return db.insert('statuses', ['name'], ['NOT STARTED'], function () {
-        db.insert('statuses', ['name'], ['IN PROGRESS'], function () {
-            db.insert('statuses', ['name'], ['COMPLETED'], noop);
+    return async.series([db.insert.bind('statuses', ['name'], ['NOT STARTED'], function () {
+        db.insert.bind('statuses', ['name'], ['IN PROGRESS'], function () {
+            db.insert.bind('statuses', ['name'], ['COMPLETED'], noop);
         })
-    })
+    })]);
 };
 
 exports.down = function (db) {

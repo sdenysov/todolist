@@ -1,5 +1,6 @@
 'use strict';
 
+var async = require('async');
 var dbm;
 var type;
 var seed;
@@ -16,13 +17,13 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-    return db.insert('tasks', ['title', 'status_id'], ['to do 1', '1'], function () {
-        db.insert('tasks', ['title', 'status_id'], ['to do 2', '1'], noop);
-    })
+    return async.series([db.insert.bind('tasks', ['title', 'status_id'], ['to do 1', '1'], function () {
+        db.insert.bind('tasks', ['title', 'status_id'], ['to do 2', '1'], noop);
+    })]);
 };
 
 exports.down = function(db) {
-  return null;
+  return async.series([db.runSql.bind('delete from tasks where id in (1, 2);')]);
 };
 
 exports._meta = {
