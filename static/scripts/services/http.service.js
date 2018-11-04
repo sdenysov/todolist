@@ -8,14 +8,21 @@ var HttpService = (function () {
                 success: callback
             });
         },
-
-        update: function (url, data, successCallback) {
+        put: function (url, data, successCallback) {
             $.ajax({
-                type: "PUT",
+                type: 'PUT',
                 url: url,
-                data: {taskTitle: data.title},
+                data: data,
+                success: successCallback
+            });
+        },
+        post: function (url, data, successCallback) {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
                 success: successCallback
             });
         }
-    }
+    };
 })();
