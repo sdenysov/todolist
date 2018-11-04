@@ -10,48 +10,45 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-            <div class="app-title text-center well">Todo list</div>
-            <form class="app-new-task-form form-horizontal" action="/tasks" method="post">
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <div class="input-group">
-                            <input name="newTask" type="text" class="form-control" id="new-task-input"
-                                   placeholder="Add new task">
-                            <div class="input-group-addon">
-                                <button type="submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-primary">Clear</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div class="app-task-todo-label">
-                Task to do <span class="badge"><%= tasks.length %></span>
-            </div>
-            <hr>
-            <div id="app-tasks-container">
-                <% tasks.forEach(function(task) { %>
-                <div class="app-task" data-task-id="<%= task.id %>">
+        <div class="col-sm-6 col-sm-offset-3">
+            <header>
+                <div class="app-title text-center well">Todo list</div>
+            </header>
+            <main>
+                <div class="col-sm-12">
                     <div class="input-group">
-                        <div class=" input-group-addon"><span class="label label-success"><%= task.status.name %></span>
-                        </div>
-                        <input type="text" class="form-control" value="<%= task.title %>">
                         <div class="input-group-addon">
-                            <div class="input-group-btn">
-                                <div class="app-task-controls">
-                                    <div class="btn btn-danger btn-xs delete-task-btn">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            <input name="toggleAllTask" type="checkbox" class="app-check-all-tasks">
+                        </div>
+                        <input name="newTask" type="text" class="form-control" id="new-task-input"
+                               placeholder="Add new task">
+                    </div>
+                    <div id="app-tasks-container">
+                        <% tasks.forEach(function(task) { %>
+                        <div class="app-task" data-task-id="<%= task.id %>">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <input name="toggleAllTask" type="checkbox" class="app-check-all-tasks">
+                                </div>
+                                <input type="text" class="form-control" value="<%= task.title %>">
+                                <div class="input-group-addon">
+                                    <div class="input-group-btn">
+                                        <div class="app-task-controls">
+                                            <div class="btn btn-danger btn-xs delete-task-btn">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <% }) %>
                     </div>
                 </div>
-                <% }) %>
-            </div>
+            </main>
+            <footer>
+
+            </footer>
         </div>
     </div>
 </div>

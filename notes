@@ -5,3 +5,12 @@ SERVICES
   DAO, BUSINESS LOGIC, SERVICE FUNCTIONS
 DATA BASE
   QUERY LANGUAGE
+
+
+// План
+- Закончить приложение TodoList
+- Сборока проекта Grunt или Webpack
+- Sass/Scss
+- ORM на стороне backend'a
+- ES6
+- Angular
