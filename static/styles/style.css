@@ -1,22 +1,103 @@
+html::after {
+    display: block;
+    content: '';
+    position: absolute;
+    background-image: url("../images/filmy-multfilm-minony.jpg");
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    opacity: 0.4;
+    z-index: -1;
+}
+
+header {
+    background-color: white;
+}
+
+label {
+    margin-bottom: 0;
+}
+
+.standard-checkbox {
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.custom-checkbox {
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    background-color: white;
+    border: 2px solid #eee;
+    border-radius: 5px;
+}
+
+.custom-checkbox:after {
+    content: "";
+    position: absolute;
+    left: 25px;
+    top: 14px;
+    display: none;
+    width: 7px;
+    height: 15px;
+    border: solid grey;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.container .standard-checkbox:checked ~ .custom-checkbox {
+    border-radius: 50%;
+}
+
+.container .standard-checkbox:checked ~ .custom-checkbox:after {
+    display: block;
+}
+
 .app-title {
     padding: 5px;
     font-size: 30px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .container {
-    margin-top: 15px ;
+    margin-top: 15px;
 }
 
-.input-group .form-control {
-    height: 48px;
+.task-area {
+    padding: 0;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
 }
 
 .input-group-addon {
-    opacity: 0.8;
+    border-radius: 0;
+    border: none;
+    background-color: white;
 }
 
-.app-check-all-tasks {
-    background-color: red;
+#app-tasks-container {
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+    border-top: 1px solid #eee;
+}
+
+.form-control {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    height: 48px;
+}
+
+.form-control:focus {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
 }
 
 .app-new-task-form .form-group {
@@ -28,27 +109,68 @@
 }
 
 .app-task {
-    /*border-width: 0 2px 1px;
-    border-style: solid;
-    border-color: #ccc;
-    background-color: #EAF8F9;
-    padding: 8px;*/
     line-height: 30px;
+    border-bottom: 1px solid #eee;
 }
 
-.app-task:first-child {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-top-width: 2px;
+.delete-task-btn {
+    display: none;
 }
 
-.app-task:last-child {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-width: 2px;
+.app-task:hover .delete-task-btn {
+    display: block;
 }
 
-#app-tasks-container .btn-xs {
-    padding: 0 4px;
-    margin: 0 2px;
+.new-task-input {
+    font-size: 18px;
+}
+
+footer {
+    background-color: white;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2);
+    line-height: 35px;
+    padding: 0 20px;
+}
+
+footer::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.todo-task {
+    float: left;
+}
+
+.task-filters {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    text-align: center;
+    padding: 0 30px;
+}
+
+.task-filters a {
+    display: inline-block;
+    border: 1px solid rgba(175, 47, 47, 0.2);
+    border-radius: 5px;
+    line-height: 20px;
+    padding: 0 10px;
+    text-decoration: none;
+    cursor: pointer;
+    color: grey;
+}
+
+.task-filters button {
+    height: 20px;
+    margin-top: 10px;
+    line-height: 10px;
+}
+
+.delete-completed-tasks-btn {
+    float: right;
+    color: grey;
+    z-index: 1;
+    position: relative;
 }

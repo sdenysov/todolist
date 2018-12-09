@@ -10,44 +10,22 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
+        <div class="task-area col-sm-6 col-sm-offset-3">
             <header>
-                <div class="app-title text-center well">Todo list</div>
+                <div class="app-title text-center">Todo list</div>
             </header>
             <main>
-                <div class="col-sm-12">
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <input name="toggleAllTask" type="checkbox" class="app-check-all-tasks">
-                        </div>
-                        <input name="newTask" type="text" class="form-control" id="new-task-input"
-                               placeholder="Add new task">
-                    </div>
-                    <div id="app-tasks-container">
-                        <% tasks.forEach(function(task) { %>
-                        <div class="app-task" data-task-id="<%= task.id %>">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <input name="toggleAllTask" type="checkbox" class="app-check-all-tasks">
-                                </div>
-                                <input type="text" class="form-control" value="<%= task.title %>">
-                                <div class="input-group-addon">
-                                    <div class="input-group-btn">
-                                        <div class="app-task-controls">
-                                            <div class="btn btn-danger btn-xs delete-task-btn">
-                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <% }) %>
-                    </div>
-                </div>
+                <app-new-task></app-new-task>
+                <app-tasks></app-tasks>
             </main>
             <footer>
-
+                <div class="todo-task"><%= tasks.length %> items left</div>
+                <div class="task-filters">
+                    <a class="all-task-filter">All</a>
+                    <a class="active-task-filter">Active</a>
+                    <a class="completed-task-filter">Completed</a>
+                </div>
+                <a href="" class="delete-completed-tasks-btn">Clear Completed</a>
             </footer>
         </div>
     </div>
@@ -55,8 +33,11 @@
 
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/scripts/services/http.service.js"></script>
-<script src="/scripts/tasks/services/tasks.service.js"></script>
-<script src="/scripts/app.js"></script>
+<script src="node_modules/lodash/lodash.min.js"></script>
+<script src="/app/core.js"></script>
+<script src="/app/components/new-task/new-task.component.js"></script>
+<script src="/app/components/tasks/tasks.component.js"></script>
+<script src="/app/services/http.service.js"></script>
+<script src="/app/app.js"></script>
 </body>
 </html>

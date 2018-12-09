@@ -1,0 +1,18 @@
+<ul id="app-tasks-container">
+    <% tasks.forEach(function(task) { %>
+    <li class="app-task" data-task-id="<%= task.id %>">
+        <div class="input-group">
+            <div class="input-group-addon">
+                <label>
+                    <input name="toggleTask" type="checkbox" class="standard-checkbox">
+                    <span class="custom-checkbox"></span>
+                </label>
+            </div>
+            <input type="text" class="form-control" value="<%= task.title %>">
+            <div class="input-group-addon">
+                <span class="delete-task-btn glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </div>
+        </div>
+    </li>
+    <% }) %>
+</ul>

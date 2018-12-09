@@ -3,7 +3,6 @@ var async = require('async');
 var dbm;
 var type;
 var seed;
-var noop = function () {};
 
 /**
  * We receive the dbmigrate dependency from dbmigrate initially.
@@ -15,12 +14,12 @@ exports.setup = function (options, seedLink) {
     seed = seedLink;
 };
 
-exports.up = function (db) {
-    return async.series([db.insert.bind('statuses', ['name'], ['NOT STARTED'], function () {
-        db.insert.bind('statuses', ['name'], ['IN PROGRESS'], function () {
-            db.insert.bind('statuses', ['name'], ['COMPLETED'], noop);
-        })
-    })]);
+exports.up = function (db, callback) {
+    async.series([
+        db.insert.bind(db, 'statuses', ['name'], ['NOT STARTED']),
+        db.insert.bind(db, 'statuses', ['name'], ['IN PROGRESS']),
+        db.insert.bind(db, 'statuses', ['name'], ['COMPLETED'])
+    ], callback);
 };
 
 exports.down = function (db) {

@@ -1,5 +1,4 @@
 'use strict';
-var async = require('async');
 var dbm;
 var type;
 var seed;
@@ -16,19 +15,17 @@ exports.setup = function (options, seedLink) {
 };
 
 exports.up = function (db) {
-    return async.series(
-        [db.createTable.bind(TABLE_NAME, {
-            columns: {
-                id: {type: 'int', primaryKey: true, autoIncrement: true},
-                name: {type: 'string', notNull: true}
-            },
-            ifNotExists: true
-        })]
-    );
+    return db.createTable(TABLE_NAME, {
+        columns: {
+            id: {type: 'int', primaryKey: true, autoIncrement: true},
+            name: {type: 'string', notNull: true}
+        },
+        ifNotExists: true
+    });
 };
 
 exports.down = function (db) {
-    return async.series([db.dropTable.bind(TABLE_NAME)]);
+    return db.dropTable(TABLE_NAME);
 };
 
 exports._meta = {
