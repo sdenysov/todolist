@@ -11,6 +11,14 @@ function getAll(callback) {
     })
 }
 
+function getById(id, callback) {
+    const taskByIdSql = "SELECT * FROM all_tasks_view WHERE id = ?;";
+    connectionPool.query(taskByIdSql, id, function (error, results) {
+        if (dbUtils.breakIfErrorExists(error, callback)) return;
+        callback(null, createTasks(results));
+    })
+}
+
 function remove(id, callback) {
     const removeTaskByIdSql = "DELETE FROM tasks WHERE id = ?";
     connectionPool.query(removeTaskByIdSql, id, function (error) {
@@ -19,9 +27,12 @@ function remove(id, callback) {
     });
 }
 
-function update(taskData, callback) {
-    const updateTaskByIdSql = "UPDATE `tasks` SET `title` = ? WHERE `id` = ?";
-    connectionPool.query(updateTaskByIdSql, [taskData.taskTitle, taskData.id], function (error) {
+function update(dataToUpdate, callback) {
+    const updateTaskByIdSql = "UPDATE tasks" +
+        " SET title = ?, status_id = ?" +
+        " WHERE id = ?";
+    let values = [dataToUpdate.title, dataToUpdate.status_id, dataToUpdate.id];
+    connectionPool.query(updateTaskByIdSql, values, function (error) {
         if (dbUtils.breakIfErrorExists(error, callback)) return;
         callback();
     });
@@ -29,9 +40,9 @@ function update(taskData, callback) {
 
 function insert(taskData, callback) {
     const insertTaskSql = "INSERT INTO `tasks` SET `title` = ?, `status_id` = 1";
-    connectionPool.query(insertTaskSql, taskData.taskTitle, function (error) {
+    connectionPool.query(insertTaskSql, taskData.title, function (error, results) {
         if (dbUtils.breakIfErrorExists(error, callback)) return;
-        callback();
+        callback(null, results.insertId);
     });
 }
 

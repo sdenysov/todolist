@@ -18,7 +18,13 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(express.static('./static'));
 
-app.use('/',router);
+app.use('/api/', router);
+app.use(/\/.+/, function (req, res) {
+    res.redirect('/');
+});
+app.use('/', function (req, res) {
+    res.render('index');
+});
 
 module.exports = app;
 

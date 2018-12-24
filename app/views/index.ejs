@@ -19,13 +19,7 @@
                 <app-tasks></app-tasks>
             </main>
             <footer>
-                <div class="todo-task"><%= tasks.length %> items left</div>
-                <div class="task-filters">
-                    <a class="all-task-filter">All</a>
-                    <a class="active-task-filter">Active</a>
-                    <a class="completed-task-filter">Completed</a>
-                </div>
-                <a href="" class="delete-completed-tasks-btn">Clear Completed</a>
+                <app-footer></app-footer>
             </footer>
         </div>
     </div>
@@ -37,7 +31,9 @@
 <script src="/app/core.js"></script>
 <script src="/app/components/new-task/new-task.component.js"></script>
 <script src="/app/components/tasks/tasks.component.js"></script>
+<script src="/app/components/footer/footer.component.js"></script>
 <script src="/app/services/http.service.js"></script>
+<script src="/app/services/tasks.service.js"></script>
 <script src="/app/app.js"></script>
 </body>
 </html>

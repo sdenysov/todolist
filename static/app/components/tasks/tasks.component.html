@@ -4,13 +4,13 @@
         <div class="input-group">
             <div class="input-group-addon">
                 <label>
-                    <input name="toggleTask" type="checkbox" class="standard-checkbox">
+                    <input data-checked="<%- isSelected( task ) %>" name="toggleTask" type="checkbox" class="standard-checkbox" data-change="onCheckTaskChange">
                     <span class="custom-checkbox"></span>
                 </label>
             </div>
-            <input type="text" class="form-control" value="<%= task.title %>">
+            <input type="text" class="form-control" value="<%= task.title %>" data-enterKey="updateTask">
             <div class="input-group-addon">
-                <span class="delete-task-btn glyphicon glyphicon-remove" aria-hidden="true"></span>
+                <span class="delete-task-btn glyphicon glyphicon-remove" data-click="onDelete"></span>
             </div>
         </div>
     </li>
