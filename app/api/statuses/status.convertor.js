@@ -1,10 +1,10 @@
 const StatusDto = require('./status.dto');
 
 module.exports = {
-    toDto: function(source) {
+    toDto: function(status) {
         return new StatusDto({
-            id: source.id,
-            name: source.name
+            id: status.id,
+            name: status.name
          });
     },
     toModel: function() {

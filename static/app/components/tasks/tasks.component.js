@@ -2,25 +2,23 @@ core.component('app-tasks', {
     dependencies: ['$scope', '$tasksService'],
     templateUrl: './app/components/tasks/tasks.component.html',
     store: [
-        'tasks',
-        'selectedTasks'
+        'tasks'
     ],
     controller: function ($scope, $tasksService) {
         console.log('app-tasks started...');
 
-        $scope.$on('get-all-tasks', function (tasks) {
-            $scope.allSelected = false;
+        $scope.$on('all-tasks-fetched', function (tasks) {
+            $scope.allSelected = tasks.every(function (t) {return t.checked});
             $scope.tasks = tasks;
-            $scope.selectedTasks = [];
         });
 
-        $scope.$on('select-all-tasks', function (checked) {
-            $scope.selectedTasks = checked
-                ? $scope.tasks.map(function (task) {
-                    return {id: task.id}
-                })
-                : [];
-        });
+        // $scope.$on('select-all-tasks', function (checked) {
+        //     $scope.selectedTasks = checked
+        //         ? $scope.tasks.map(function (task) {
+        //             return {id: task.id}
+        //         })
+        //         : [];
+        // });
 
         $scope.$on('add-new-task', function (task) {
             $scope.allSelected = false;
@@ -34,33 +32,28 @@ core.component('app-tasks', {
             });
         });
 
-        $scope.$on('completed-task-filter', function () {
-            $scope.tasks = $scope.tasks.filter(function (task) {
-                return $scope.selectedTasks.map(function (selectedTask) {
-                    return selectedTask.id
-                }).includes(task.id)
-            });
-        });
+        // $scope.$on('completed-task-filter', function () {
+        //     $scope.tasks = $scope.tasks.filter(function (task) {
+        //         return $scope.selectedTasks.map(function (selectedTask) {
+        //             return selectedTask.id
+        //         }).includes(task.id)
+        //     });
+        // });
 
-        $scope.$on('active-task-filter', function () {
-            $scope.tasks = $scope.tasks.filter(function (task) {
-                return !$scope.selectedTasks.map(function (selectedTask) {
-                    return selectedTask.id
-                }).includes(task.id)
-            });
-        });
+        // $scope.$on('active-task-filter', function () {
+        //     $scope.tasks = $scope.tasks.filter(function (task) {
+        //         return !$scope.selectedTasks.map(function (selectedTask) {
+        //             return selectedTask.id
+        //         }).includes(task.id)
+        //     });
+        // });
 
-        $scope.$on('all-task-filter', function () {
-            $tasksService.getAllTasks(function (tasks) {
-                $scope.tasks = tasks;
-            });
-        });
-
-        $scope.isSelected = function (task) {
-            return $scope.selectedTasks.some(function (item) {
-                return item.id === task.id;
-            });
-        };
+        // $scope.isSelected = function (task) {
+        //     return task.checked;
+        //     return $scope.selectedTasks.some(function (item) {
+        //         return item.id === task.id;
+        //     });
+        // };
 
         $scope.onDelete = function ($event) {
             var id = extractTaskId($event);
@@ -74,19 +67,22 @@ core.component('app-tasks', {
 
         $scope.onCheckTaskChange = function ($event) {
             var taskId = extractTaskId($event);
-            $scope.selectedTasks = $event.target.checked
-                ? $scope.selectedTasks.concat([{id: taskId}])
-                : $scope.selectedTasks.filter(function (item) {
-                    return item.id !== taskId
+            var taskForUpdate = $scope.tasks.find(function (task) {
+                return task.id === taskId;
+            });
+            taskForUpdate.checked = $event.target.checked;
+            $tasksService.update(taskForUpdate, function (updatedTask) {
+                var tasks = $scope.tasks.map(function (task) {
+                    return task.id === updatedTask.id ? updatedTask : task;
                 });
-            $scope.$notify('check-task-change');
+                $scope.$notify('all-tasks-fetched', tasks);
+            });
         };
 
         $scope.updateTask = function ($event) {
             var dataForUpdate = {
                 id: extractTaskId($event),
-                title: $event.target.value,
-                status_id: 1
+                title: $event.target.value
             };
             $tasksService.update(dataForUpdate, function (updatedTask) {
                 $scope.$notify('update-task', updatedTask);
@@ -94,7 +90,7 @@ core.component('app-tasks', {
         };
 
         $tasksService.getAllTasks(function (tasks) {
-            $scope.$notify('get-all-tasks', tasks);
+            $scope.$notify('all-tasks-fetched', tasks);
         });
 
         function extractTaskId($event) {

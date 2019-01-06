@@ -1,0 +1,25 @@
+{
+  "defaultEnv": "development",
+  "development": {
+    "driver": "mysql",
+    "user": "root",
+    "password": "password",
+    "host": "localhost",
+    "database": "todolist",
+    "multipleStatements": true,
+    "dialect": "mysql",
+    "pool": {
+      "max": 20,
+      "min": 5,
+      "idle": 100
+    }
+  },
+  "production": {
+    "driver": "mysql",
+    "user": "root",
+    "password": "password",
+    "host": "localhost",
+    "database": "todolist",
+    "multipleStatements": true
+  }
+}

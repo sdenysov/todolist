@@ -1,22 +1,15 @@
-const TaskDto = require('./task.dto');
-const StatusConvertor = require('../statuses/status.convertor');
+const TaskStatus = require('../../models/task-status');
+const Task = require('../../models').Task;
 
 module.exports = {
-    toDto: function(source) {
-        return new TaskDto({
-            id: source.id,
-            title: source.title,
-            status: getStatus(source)
-         });
+    toDto: function(task) {
+        return {
+            id: task.id,
+            title: task.title,
+            checked: task.status.name === TaskStatus.COMPLETED
+        };
     },
-    toModel: function() {
-        throw new Error('Unsupported operation');
+    toModel: function(taskDto) {
+        return new Task(taskDto);
     }
 };
-
-function getStatus(source) {
-    return StatusConvertor.toDto({
-        id: source.status.id,
-        name: source.status.name
-    });
-}

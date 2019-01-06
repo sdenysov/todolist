@@ -8,6 +8,12 @@ core.service('tasksService', {
                     callback(tasks);
                 })
             },
+            getByStatus: function (statusId, callback) {
+                var url = baseUrl + '?statusId=' + statusId;
+                $httpService.get(url, function (tasks) {
+                    callback(tasks);
+                })
+            },
             delete: function (id, callback) {
                 var deleteTaskUrl = baseUrl + id;
                 $httpService.delete(deleteTaskUrl, function () {
@@ -15,8 +21,8 @@ core.service('tasksService', {
                 })
             },
             update: function (task, callback) {
-                $httpService.put(baseUrl, task, function () {
-                    callback(task);
+                $httpService.put(baseUrl, task, function (updatedTask) {
+                    callback(updatedTask);
                 })
             },
             save: function (task, callback) {

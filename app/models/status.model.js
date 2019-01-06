@@ -1,9 +1,10 @@
-class Status {
-
-    constructor(params) {
-        this.id = params.id || null;
-        this.name = params.name;
-    }
-}
-
-module.exports = Status;
+module.exports = (sequelize, DataTypes) => {
+    return sequelize.define("Status", {
+        name: DataTypes.STRING,
+    }, {
+        timestamps: false,
+        underscored: true,
+        tableName: 'statuses',
+        version: false
+    })
+};

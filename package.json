@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate:up": "db-migrate up --config config/database.json"
   },
   "author": "",
   "license": "ISC",
@@ -15,7 +16,10 @@
     "ejs-locals": "^1.0.2",
     "express": "^4.16.3",
     "lodash": "^4.17.11",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.4",
+    "nconf": "^0.10.0",
+    "sequelize": "^4.42.0"
   },
   "devDependencies": {
     "db-migrate": "^0.11.3",

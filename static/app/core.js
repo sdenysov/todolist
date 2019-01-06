@@ -7,7 +7,6 @@ var core = (function ($, $Lodash) {
     var $$store = {
         allSelected: false,
         tasks: [],
-        selectedTasks: [],
         taskCount: 3
     };
 
@@ -61,7 +60,9 @@ var core = (function ($, $Lodash) {
         },
         triggerEvent: function (event, data) {
             Object.keys($$components)
-                .map(function (selector) {return $$components[selector]})
+                .map(function (selector) {
+                    return $$components[selector]
+                })
                 .forEach(function ($component) {
                     var handler = $component.events[event];
                     handler && handler(data);
@@ -70,7 +71,7 @@ var core = (function ($, $Lodash) {
     };
 
     function Scope($core, $component, $host, $template) {
-        return {
+        var self = {
             $notify: function (event, data) {
                 var self = this;
                 $core.triggerEvent(event, data);
@@ -86,10 +87,6 @@ var core = (function ($, $Lodash) {
             $render: function () {
                 var self = this;
                 $host.html($template(self));
-                $host.find('[data-filter]').click(function ($event) {
-                    var handlerName = $(this).data('filter');
-                    handlerName && self[handlerName].call(self, $event);
-                });
                 $host.find('[data-change]').change(function ($event) {
                     var handlerName = $(this).data('change');
                     handlerName && self[handlerName].call(self, $event);
@@ -97,7 +94,7 @@ var core = (function ($, $Lodash) {
                 $host.find('[data-checked]').each(function () {
                     var $checkbox = $(this);
                     var checked = $checkbox.data('checked');
-                     $checkbox.prop('checked', checked === true);
+                    $checkbox.prop('checked', checked === true);
                 });
                 $host.find('[data-enterKey]').keypress(function ($event) {
                     if ($event.which === 13) {
@@ -105,13 +102,14 @@ var core = (function ($, $Lodash) {
                         handlerName && self[handlerName].call(self, $event);
                     }
                 });
-                $host.on('click', function ($event) {
-                    var $target = $($event.target);
-                    var clickFn = $target.data('click');
-                    clickFn && self[clickFn]($event);
-                });
             }
         };
+        $host.on('click', function ($event) {
+            var $target = $($event.target);
+            var clickFn = $target.data('click');
+            clickFn && self[clickFn]($event);
+        });
+        return self;
     }
 
     function Injector(providers) {

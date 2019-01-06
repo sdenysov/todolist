@@ -1,16 +1,23 @@
-let mysql = require('mysql');
-let pool = mysql.createPool({
-    connectionLimit : 10,
-    waitForConnections: true,
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'password',
-    database: 'todolist'
-});
+const fs = require('fs');
+const config = require('../../config');
+const path = require('path');
+const db = {};
 
-pool.on('connection', function (connection) {
-    console.log('Connected: connection id: ', connection.id);
-});
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize(config.database, config.user, config.password, config);
 
-module.exports = pool;
+fs.readdirSync(__dirname)
+    .filter(file => file !== 'index.js')
+    .forEach(file => {
+        const model = sequelize.import(path.join(__dirname, file));
+        db[model.name] = model;
+    });
+
+Object.values(db)
+    .filter(model => model.associate)
+    .forEach(model => model.associate(db));
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+module.exports = db;

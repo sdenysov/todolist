@@ -2,13 +2,12 @@ core.component('app-footer', {
     dependencies: ['$scope', '$tasksService'],
     templateUrl: './app/components/footer/footer.component.html',
     store: [
-        'tasks',
-        'selectedTasks'
+        'tasks'
     ],
     controller: function ($scope, $tasksService) {
         console.log('app-footer started...');
 
-        $scope.$on('get-all-tasks', function () {
+        $scope.$on('all-tasks-fetched', function () {
             $scope.taskCount = $scope.tasks.length
         });
 
@@ -20,14 +19,20 @@ core.component('app-footer', {
             $scope.taskCount = $scope.tasks.length
         });
 
-        $scope.onAllTasksFilter = function () {
-            $scope.$notify('all-task-filter')
+        $scope.filterAll = function () {
+            $tasksService.getAllTasks(function (tasks) {
+                $scope.$notify('all-tasks-fetched', tasks);
+            });
         };
-        $scope.onActiveTasksFilter = function () {
-            $scope.$notify('active-task-filter')
+        $scope.filterActive = function () {
+            $tasksService.getByStatus(1, function (tasks) {
+                $scope.$notify('all-tasks-fetched', tasks);
+            });
         };
-        $scope.onCompletedTasksFilter = function () {
-            $scope.$notify('completed-task-filter')
+        $scope.filterCompleted = function () {
+            $tasksService.getByStatus(3, function (tasks) {
+                $scope.$notify('all-tasks-fetched', tasks);
+            });
         }
     }
 });

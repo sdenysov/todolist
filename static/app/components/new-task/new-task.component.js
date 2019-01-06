@@ -3,8 +3,7 @@ core.component('app-new-task', {
     templateUrl: './app/components/new-task/new-task.component.html',
     store: [
         'allSelected',
-        'tasks',
-        'selectedTasks'
+        'tasks'
     ],
     controller: function ($scope, $tasksService) {
         console.log('app-new-task started...');
@@ -27,7 +26,7 @@ core.component('app-new-task', {
         $scope.$on('delete-task', updateAllTasksChecked);
 
         function updateAllTasksChecked() {
-            $scope.allSelected = $scope.tasks.length === $scope.selectedTasks.length;
+            $scope.allSelected = $scope.tasks.every(function (t) {return t.checked});
         }
     }
 });
