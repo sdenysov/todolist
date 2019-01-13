@@ -8,8 +8,11 @@ core.component('app-new-task', {
     controller: function ($scope, $tasksService) {
         console.log('app-new-task started...');
         $scope.onSelectAllClick = function ($event) {
-            $scope.allSelected = $event.target.checked;
-            $scope.$notify('select-all-tasks', $scope.allSelected);
+            var allSelected = $event.target.checked;
+            $scope.allSelected = allSelected;
+            $tasksService.updateAllStatuses(allSelected, function () {
+                $scope.$notify('all-check', allSelected);
+            });
         };
         $scope.addNewTask = function ($event) {
             var task = {
@@ -22,11 +25,14 @@ core.component('app-new-task', {
             });
         };
 
+        $scope.$on('all-tasks-fetched', updateAllTasksChecked);
         $scope.$on('check-task-change', updateAllTasksChecked);
         $scope.$on('delete-task', updateAllTasksChecked);
 
-        function updateAllTasksChecked() {
-            $scope.allSelected = $scope.tasks.every(function (t) {return t.checked});
+        function updateAllTasksChecked(tasks) {
+            $scope.allSelected = tasks.every(function (t) {
+                return t.checked;
+            });
         }
     }
 });

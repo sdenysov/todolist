@@ -7,8 +7,8 @@ core.component('app-footer', {
     controller: function ($scope, $tasksService) {
         console.log('app-footer started...');
 
-        $scope.$on('all-tasks-fetched', function () {
-            $scope.taskCount = $scope.tasks.length
+        $scope.$on('all-tasks-fetched', function (tasks) {
+            $scope.taskCount = tasks.length
         });
 
         $scope.$on('add-new-task', function () {
@@ -33,6 +33,21 @@ core.component('app-footer', {
             $tasksService.getByStatus(3, function (tasks) {
                 $scope.$notify('all-tasks-fetched', tasks);
             });
+        };
+        $scope.clearCompleted = function () {
+            var tasksIdForDelete = $scope.tasks
+                .filter(function (task) {
+                    return task.checked === true;
+                })
+                .map(function (task) {
+                    return task.id
+                });
+            $tasksService.deleteAllCompleted(tasksIdForDelete, function () {
+                $scope.tasks = $scope.tasks.filter(function (task) {
+                    return tasksIdForDelete.includes(task.id);
+                });
+                $scope.$notify('all-tasks-fetched', $scope.tasks);
+            })
         }
     }
 });

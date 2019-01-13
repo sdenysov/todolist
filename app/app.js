@@ -6,7 +6,7 @@ let router = require('./api/tasks/tasks.router');
 let app = express();
 let bodyParser = require('body-parser');
 
-// view engine setup
+// view engine setupq
 app.engine('ejs', ejsLocals);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

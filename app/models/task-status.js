@@ -1,6 +1,6 @@
 const TaskStatus = {
-    NOT_STARTED: 'NOT_STARTED',
-    COMPLETED: 'COMPLETED'
+    NOT_STARTED: 1,
+    COMPLETED: 3
 };
 
-module.export = TaskStatus;
+module.exports = TaskStatus;

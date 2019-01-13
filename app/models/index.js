@@ -7,7 +7,7 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize(config.database, config.user, config.password, config);
 
 fs.readdirSync(__dirname)
-    .filter(file => file !== 'index.js')
+    .filter(file => file !== 'index.js' && file !== 'task-status.js')
     .forEach(file => {
         const model = sequelize.import(path.join(__dirname, file));
         db[model.name] = model;

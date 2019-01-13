@@ -9,8 +9,8 @@ DATA BASE
 
 // План
 - Закончить приложение TodoList
-- Сборока проекта Grunt или Webpack
-- Sass/Scss
-- ORM на стороне backend'a
-- ES6
 - Angular
++ Сборока проекта Grunt или Webpack
++ Sass/Scss => CSS
++ ORM на стороне backend'a
++ ES6

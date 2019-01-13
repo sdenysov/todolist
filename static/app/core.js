@@ -58,8 +58,11 @@ var core = (function ($, $Lodash) {
                 })
             });
         },
-        triggerEvent: function (event, data) {
+        triggerEvent: function (sourceSelector, event, data) {
             Object.keys($$components)
+                .filter(function (selector) {
+                    return selector !== sourceSelector;
+                })
                 .map(function (selector) {
                     return $$components[selector]
                 })
@@ -74,7 +77,7 @@ var core = (function ($, $Lodash) {
         var self = {
             $notify: function (event, data) {
                 var self = this;
-                $core.triggerEvent(event, data);
+                $core.triggerEvent($component.selector, event, data);
                 self.$render();
             },
             $on: function (event, handler) {

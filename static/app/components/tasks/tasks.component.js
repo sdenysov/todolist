@@ -2,66 +2,35 @@ core.component('app-tasks', {
     dependencies: ['$scope', '$tasksService'],
     templateUrl: './app/components/tasks/tasks.component.html',
     store: [
+        'allSelected',
         'tasks'
     ],
     controller: function ($scope, $tasksService) {
         console.log('app-tasks started...');
 
         $scope.$on('all-tasks-fetched', function (tasks) {
-            $scope.allSelected = tasks.every(function (t) {return t.checked});
             $scope.tasks = tasks;
         });
 
-        // $scope.$on('select-all-tasks', function (checked) {
-        //     $scope.selectedTasks = checked
-        //         ? $scope.tasks.map(function (task) {
-        //             return {id: task.id}
-        //         })
-        //         : [];
-        // });
+        $scope.$on('all-check', function (checked) {
+            $scope.tasks = $scope.tasks.map(function (task) {
+                task.checked = checked;
+                return task;
+            });
+        });
 
         $scope.$on('add-new-task', function (task) {
             $scope.allSelected = false;
             $scope.tasks.push(task);
         });
 
-        $scope.$on('update-task', function (updatedTask) {
-            console.log('...');
-            $scope.tasks = $scope.tasks.map(function (task) {
-                return task.id === updatedTask.id ? updatedTask : task;
-            });
-        });
-
-        // $scope.$on('completed-task-filter', function () {
-        //     $scope.tasks = $scope.tasks.filter(function (task) {
-        //         return $scope.selectedTasks.map(function (selectedTask) {
-        //             return selectedTask.id
-        //         }).includes(task.id)
-        //     });
-        // });
-
-        // $scope.$on('active-task-filter', function () {
-        //     $scope.tasks = $scope.tasks.filter(function (task) {
-        //         return !$scope.selectedTasks.map(function (selectedTask) {
-        //             return selectedTask.id
-        //         }).includes(task.id)
-        //     });
-        // });
-
-        // $scope.isSelected = function (task) {
-        //     return task.checked;
-        //     return $scope.selectedTasks.some(function (item) {
-        //         return item.id === task.id;
-        //     });
-        // };
-
         $scope.onDelete = function ($event) {
             var id = extractTaskId($event);
-            $tasksService.delete(id, function (id) {
+            $tasksService.delete(id, function () {
                 $scope.tasks = $scope.tasks.filter(function (task) {
                     return task.id !== id;
                 });
-                $scope.$notify('delete-task', id);
+                $scope.$notify('delete-task', $scope.tasks);
             });
         };
 
@@ -72,10 +41,10 @@ core.component('app-tasks', {
             });
             taskForUpdate.checked = $event.target.checked;
             $tasksService.update(taskForUpdate, function (updatedTask) {
-                var tasks = $scope.tasks.map(function (task) {
+                $scope.tasks = $scope.tasks.map(function (task) {
                     return task.id === updatedTask.id ? updatedTask : task;
                 });
-                $scope.$notify('all-tasks-fetched', tasks);
+                $scope.$notify('check-task-change', $scope.tasks);
             });
         };
 
@@ -85,11 +54,17 @@ core.component('app-tasks', {
                 title: $event.target.value
             };
             $tasksService.update(dataForUpdate, function (updatedTask) {
+                var tasks = $scope.tasks.map(function (task) {
+                    return task.id === updatedTask.id ? updatedTask : task;
+                });
+                console.log(tasks);
+                $scope.tasks = tasks;
                 $scope.$notify('update-task', updatedTask);
             });
         };
 
         $tasksService.getAllTasks(function (tasks) {
+            $scope.tasks = tasks;
             $scope.$notify('all-tasks-fetched', tasks);
         });
 

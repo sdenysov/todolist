@@ -1,20 +1,16 @@
-const TaskConverter = require('./task.convertor');
+const TaskConverter = require('./task.converter');
+const StatusConverter = require('../statuses/status.converter');
 const TaskService = require('../../services/task.service');
 const Task = require('../../models').Task;
 const Status = require('../../models').Status;
 
 function find(statusId, callback) {
-    const params = {include: {model: Status, as: 'status'}};
-    if (statusId) {
-        params.where = {status_id: statusId};
-    }
-    Task.findAll(params)
-        .then(function (tasks) {
-            return callback(null, tasks.map(TaskConverter.toDto))
-        })
-        .catch(function (err) {
-            return callback(err)
-        });
+    TaskService.find(statusId,
+        function (error, tasks) {
+            if (error) throw error;
+            callback(null, tasks);
+        }
+    )
 }
 
 function findById(id, callback) {
@@ -24,10 +20,20 @@ function findById(id, callback) {
 }
 
 function update(taskDto, callback) {
-    const taskModelForUpdate = TaskConverter.toModel(taskDto);
-    TaskService.update(taskModelForUpdate, callback);
+    TaskConverter.toModel(taskDto, function (model) {
+        TaskService.update(model, updatedTask => callback(TaskConverter.toDto(updatedTask)));
+    });
+}
+
+function updateAll(status, callback) {
+    StatusConverter.toModel(status, function (statusModel) {
+        TaskService.updateAll(statusModel.id, updatedTasks =>
+            callback(updatedTasks));
+    });
 }
 
 exports.find = find;
 exports.findById = findById;
 exports.update = update;
+exports.updateAll = updateAll;
+

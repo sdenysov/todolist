@@ -15,14 +15,26 @@ core.service('tasksService', {
                 })
             },
             delete: function (id, callback) {
-                var deleteTaskUrl = baseUrl + id;
-                $httpService.delete(deleteTaskUrl, function () {
-                    callback(id);
+                var url = baseUrl + id;
+                $httpService.delete(url, function () {
+                    callback();
+                })
+            },
+            deleteAllCompleted: function (ids, callback) {
+                var url = '/api/deleteAllCompleted';
+                $httpService.post(url, {ids: ids}, function () {
+                    callback();
                 })
             },
             update: function (task, callback) {
                 $httpService.put(baseUrl, task, function (updatedTask) {
                     callback(updatedTask);
+                })
+            },
+            updateAllStatuses: function (status, callback) {
+                var url = '/api/selectAll';
+                $httpService.put(url, {checked: status}, function (tasks) {
+                    callback(tasks);
                 })
             },
             save: function (task, callback) {
